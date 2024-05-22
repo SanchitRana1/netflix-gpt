@@ -1,39 +1,61 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { auth } from "../utils/firebase";
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser, removeUser } from "../utils/userSlice";
+import { LOGO, USER_AVATAR } from "../utils/constants";
 const Header = () => {
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
+  const dispatch = useDispatch();
   //on click of sign out button
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
-        navigate("/");
       })
       .catch((error) => {
         // An error happened.
         console.log(error);
+        navigate("/error")
       });
   };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName, photoURL } = user;
+        //dispatch an action
+        dispatch(addUser({ uid: uid, email: email, displayName: displayName,photoURL:photoURL }));
+        navigate("/browse");//navigate to browse page is user is signed in
+      } else {
+        // User is signed out
+        dispatch(removeUser());
+        navigate("/");//navigate to login page is user is signed out
+      }
+    });
+
+    // Unsubscribe when component unmounts
+    return ()=>unsubscribe();
+  }, []);
+
   return (
     <div>
       <div className="absolute py-2 px-4 bg-gradient-to-b from-black w-screen z-10 flex justify-between">
         <img
           className="w-44 object-fill"
-          src="https://cdn.cookielaw.org/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png"
+          src={LOGO}
           alt="netflix-logo"
         />
         {user && (
-          <div className="flex p-2">
+          <div className="flex p-2 items-center">
             <img
-              className="w-14 h-14"
+              className="w-10 h-10 rounded-md"
               src={
                 user?.photoURL
                   ? user?.photoURL
-                  : "https://occ-0-3647-3646.1.nflxso.net/dnm/api/v6/vN7bi_My87NPKvsBoib006Llxzg/AAAABTZ2zlLdBVC05fsd2YQAR43J6vB1NAUBOOrxt7oaFATxMhtdzlNZ846H3D8TZzooe2-FT853YVYs8p001KVFYopWi4D4NXM.png?r=229"
+                  : USER_AVATAR
               }
               alt="netflix-user-logo"
             />

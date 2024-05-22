@@ -8,14 +8,13 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BG_IMG, USER_AVATAR } from "../utils/constants";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const name = useRef(null);
   const email = useRef(null);
@@ -63,7 +62,7 @@ const Login = () => {
           updateProfile(user, {
             displayName: name.current.value,
             photoURL:
-              "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
+              {USER_AVATAR},
           })
             .then(() => {
               // Profile updated!
@@ -78,8 +77,6 @@ const Login = () => {
                   photoURL: photoURL,
                 })
               );
-
-              navigate("/browse"); //navigate to browse page is user is signed op
             })
             .catch((error) => {
               // An error occurred
@@ -101,7 +98,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          navigate("/browse"); //navigate to browse page is user is signed in
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -115,10 +111,10 @@ const Login = () => {
   return (
     <div>
       <Header />
-      <div className="absolute w-full h-full">
+      <div className="absolute w-screen h-screen">
         <img
           className="min-h-[100%] min-w-[100%] object-center"
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/31ef2c5c-3d08-47d5-b7a9-f29e4f4f893d/1ac1cee7-5580-4cfa-b701-99d1a8f2d148/IN-en-20240506-POP_SIGNUP_TWO_WEEKS-perspective_WEB_ebbef551-d229-4865-8cdc-fb00f8960227_large.jpg"
+          src={BG_IMG}
           alt="bg-login"
         />
       </div>
