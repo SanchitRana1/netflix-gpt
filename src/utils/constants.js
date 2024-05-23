@@ -14,3 +14,5 @@ export const API_GET_OPTIONS = {
   };
 
 export const YOUTUBE_TRAILER = "https://www.youtube.com/watch?v="
+
+export const MOVIE_IMG_CDN_URL = "https://image.tmdb.org/t/p/w780"
