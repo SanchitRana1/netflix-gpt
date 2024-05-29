@@ -1,16 +1,12 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  updateProfile,
-} from "firebase/auth";
+import {  createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile,} from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { BG_IMG, USER_AVATAR } from "../utils/constants";
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -19,6 +15,9 @@ const Login = () => {
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
+
+  const [showPassword, setShowPassword] = useState(false);
+
 
   //state for error message
   const [errMessage, setErrMessage] = useState(null);
@@ -61,8 +60,7 @@ const Login = () => {
           //updating user profile
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL:
-              {USER_AVATAR},
+            photoURL: { USER_AVATAR },
           })
             .then(() => {
               // Profile updated!
@@ -108,18 +106,20 @@ const Login = () => {
     }
   };
 
+  const handleToggle = () => {};
+
   return (
     <div>
       <Header />
-      <div className="absolute w-screen h-screen">
+      <div className="fixed w-screen h-screen">
         <img
-          className="min-h-[100%] min-w-[100%] object-center"
+          className="min-h-[100%] min-w-[100%] object-cover"
           src={BG_IMG}
           alt="bg-login"
         />
       </div>
       <form
-        className="w-[30rem] p-14 absolute my-36 mx-auto bg-black  right-0 left-0 text-white rounded-md bg-opacity-75"
+        className="md:w-[30rem] p-4 md:p-14 absolute my-36 mx-10 md:mx-auto bg-black  right-0 left-0 text-white rounded-md bg-opacity-75"
         onSubmit={(e) => {
           e.preventDefault();
         }}
@@ -141,12 +141,17 @@ const Login = () => {
           placeholder="Email ID"
           className="p-4 my-2 border border-gray-400 rounded-md w-full bg-gray-600 bg-opacity-25"
         />
-        <input
-          ref={password}
-          type="password"
-          placeholder="Password"
-          className="p-4 my-2 border border-gray-400 rounded-md w-full bg-gray-600 bg-opacity-25"
-        />
+        <div className="flex">
+          <input
+            ref={password}
+            type={showPassword ? 'text' : 'password'}
+            placeholder="Password"
+            className="p-4 my-2 border border-gray-400 rounded-md w-full bg-gray-600 bg-opacity-25 relative w-100"
+          />
+          <button className="py-4 my-3 absolute right-[15%] w-5" onClick={()=>setShowPassword(!showPassword)}>
+          {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </button>
+        </div>
         {errMessage !== null && (
           <p className="p-2 my-1 font-bold text-red-500 text-lg">
             {errMessage}

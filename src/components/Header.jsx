@@ -64,10 +64,18 @@ const Header = () => {
 
   return (
     <div>
-      <div className="absolute py-2 px-4 bg-gradient-to-b from-black w-full z-10 flex justify-between">
-        <img className="w-44 object-fill" src={LOGO} alt="netflix-logo" />
+      <div className="absolute py-2 px-4 bg-gradient-to-b from-black w-full z-10 flex justify-between
+      flex-col  items-center
+      sm:items-center
+      md:flex-row">
+        <img
+          className="w-44 object-fill cursor-pointer"
+          onClick={() => showGPTSearch && navigate("/")}
+          src={LOGO}
+          alt="netflix-logo"
+        />
         {user && (
-          <div className="flex p-2 items-center text-white">
+          <div className="flex p-2 items-center text-white w-100">
             {/* select box for languages , only visible is Show GPT is true*/}
             {showGPTSearch && (
               <select
@@ -87,10 +95,10 @@ const Header = () => {
               className="py-2 px-6 m-2 bg-purple-800 rounded-lg mx-4"
               onClick={handleGptSearchClick}
             >
-              {showGPTSearch ? "Homepage" : "GPT ⌕" }
+              {showGPTSearch ? "Homepage" : "GPT ⌕"}
             </button>
             <img
-              className="w-10 h-10 rounded-md"
+              className="w-10 h-10 rounded-md hidden md:inline-block"
               src={user?.photoURL ? user?.photoURL : USER_AVATAR}
               alt="netflix-user-logo"
             />
