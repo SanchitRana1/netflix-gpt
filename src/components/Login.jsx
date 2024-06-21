@@ -110,7 +110,7 @@ const Login = () => {
 
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <div className="fixed w-screen h-screen">
         <img
           className="min-h-[100%] min-w-[100%] object-cover"

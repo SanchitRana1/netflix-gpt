@@ -27,6 +27,7 @@ const Header = () => {
   };
 
   const handleGptSearchClick = () => {
+    navigate("/browse"); //navigate to browse page is user is signed in
     // toggle GPT search by dispatching action
     dispatch(toggleGPTSearch());
   };
@@ -70,7 +71,7 @@ const Header = () => {
       md:flex-row">
         <img
           className="w-44 object-fill cursor-pointer"
-          onClick={() => showGPTSearch && navigate("/")}
+          onClick={() => showGPTSearch ? navigate("/browse") : navigate("/browse") }
           src={LOGO}
           alt="netflix-logo"
         />
