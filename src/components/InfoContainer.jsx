@@ -17,12 +17,12 @@ const InfoContainer = ({ info }) => {
     overview,
   } = info;
   return (
-    <div className="m-2 p-2 flex w-[90%] mx-auto bg-white bg-opacity-5 mb-4 rounded-lg">
+    <div className="m-2 p-2 flex  w-[90%] mx-auto bg-white bg-opacity-5 mb-4 rounded-lg">
       <div className="m-4 h-full border-4 rounded-md">
         <MovieCard moviePosterPath={poster_path} />
       </div>
-      <div className="flex w-full justify-between mx-5">
-        <div className="w-[45%]">
+      <div className="flex w-full flex-col md:flex-row md:justify-between mx-5 ">
+        <div className="md:w-[45%] w-[100%]">
           <div className="my-2">
             <span className="font-bold">Name : </span>
             <span>{original_title ? original_title : title}</span>
@@ -45,7 +45,7 @@ const InfoContainer = ({ info }) => {
               genres.map((g, index) => <span key={index}>{g.name} | </span>)}
           </div>
         </div>
-        <div className="w-[45%]">
+        <div className="md:w-[45%] w-[100%]">
           <div className="my-2">
             <span className="font-bold">Release Date : </span>
             <span>{release_date}</span>

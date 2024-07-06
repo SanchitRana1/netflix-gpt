@@ -42,7 +42,7 @@ const AboutMovie = () => {
   }, []);
 
   return (
-    <div className="flex flex-col md:pt-[8%] pt-[25%] bg-black text-white w-full h-[100%] bg-fixed">
+    <div className="flex flex-col-reverse md:pt-[8%] pt-[25%] bg-black text-white w-full h-[100%] bg-fixed">
       <div>
         <InfoContainer info={info} />
       </div>
