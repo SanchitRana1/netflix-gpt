@@ -101,7 +101,7 @@ const Login = () => {
           const errorCode = error.code;
           const errorMessage = error.message;
           setErrMessage(errorCode + " | " + errorMessage);
-          console.log(errorMessage);
+          // console.log(errorMessage);
         });
     }
   };
@@ -166,7 +166,7 @@ const Login = () => {
         </button>
         {isSignInForm ? (
           <p className="p-2 my-2">
-            New to Netflix?{" "}
+            New to NetflixGPT?{" "}
             <span className="font-bold cursor-pointer" onClick={toggleSignIn}>
               Sign up now.
             </span>
